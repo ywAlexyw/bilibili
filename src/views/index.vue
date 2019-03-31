@@ -5,7 +5,18 @@
           <Nav></Nav>
           <div class="index-bivder"></div>
           <div class="index-banner">
-            <div class="swiper"></div>
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(item, index) in swiperImg" :key="index">
+                <a class="li">
+                  <img :src="item.imgSrc">
+                </a>
+              </div>
+            </div>
+             <div class="point">
+               <div class="swiper-pagination SC">
+
+               </div>
+             </div>
           </div>
           <RankingFLow></RankingFLow>
           <Footer></Footer>
@@ -14,10 +25,12 @@
 </template>
 
 <script>
+import Swiper from 'swiper'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Nav from '@/components/Nav'
 import RankingFLow from '@/components/RankingFlow'
+import { getSwiperImg } from '@/js/request.js'
 
 export default {
   components: {
@@ -25,6 +38,36 @@ export default {
     Footer,
     Nav,
     RankingFLow
+  },
+  data () {
+    return {
+      swiperImg: []
+    }
+  },
+  created () {
+    this.getData()
+  },
+  methods: {
+    getData () {
+      getSwiperImg().then((res) => {
+        this.swiperImg = res.data.swiperImg
+        this.$nextTick(() => { 
+          // $nextTick和mounted是一样的
+          /* eslint-disable no-new */
+          new Swiper('.index-banner', {
+            pagination: {
+              el: '.swiper-pagination'
+            },
+            speed: 400,
+            effect: 'fade',
+            loop: true,
+            autoplay: {
+              delay: 3000,
+            }
+          })
+        })
+      })
+    }
   }
 }
 </script>
@@ -40,8 +83,60 @@ export default {
 .index-banner {
   position: relative;
   height: 4.69333rem;
-  border-radius: .34133rem;
-  border: 1px solid #aaa;
   padding: 0 .512rem;
+}
+
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 4.69333rem;
+  border-radius: .34133rem;
+  overflow: hidden;
+}
+
+.swiper-slide {
+  position: relative;
+  // display: block;
+  // float: left;
+  width: 100%;
+  height: 4.69333rem;
+  margin: auto;
+}
+
+.li img {
+  width: 100%;
+  height: 100%;
+}
+
+.point {
+  position: absolute;
+  left: 0;
+  bottom: .192rem;
+  z-index: 5;
+  width: 100%;
+  text-align: center;
+  height: .552rem;
+  line-height: .552rem;
+}
+
+.SC {
+  background-color: rgba(0,0,0,.5);
+  border-radius: .21333rem;
+  padding: 0 .32rem;
+  display: inline-block;
+  transform: translate(-50%,50%);
+}
+.swiper-pagination-bullet {
+    width: .21333rem;
+    height: .21333rem;
+    float: left;
+    background: #fff;
+    opacity: 1;
+    border-radius: .10667rem;
+    margin: .10667rem!important;
+  }
+
+.swiper-pagination-bullet-active {
+  background: #de698c!important;
 }
 </style>

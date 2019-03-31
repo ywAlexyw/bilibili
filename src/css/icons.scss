@@ -30,6 +30,10 @@ $iconSrc: '../assets/svg/';
     background: url($iconSrc + 'pull.svg') center no-repeat;
 }
 
+.pushBtn_icon {
+    background: url($iconSrc + 'push.svg') center no-repeat;
+}
+
 .playIcon {
     width: 100%;
     height: 100%;

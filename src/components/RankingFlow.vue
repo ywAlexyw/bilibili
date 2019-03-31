@@ -4,7 +4,7 @@
             <div class="video">
                 <a class="video-item" v-for="(item, index) in videos" :key="index">
                     <div class="video-item-img">
-                        <img :src="item.image" :alt="item.name">
+                        <!-- <img :src="item.image" :alt="item.name"> -->
                         <div class="info">
                             <div class="play_icon">
                                 <i class="playIcon"></i>
@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       videos: []
-    } 
+    }
   },
   created () {
     this.getData()
@@ -50,7 +50,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss" rel="stylesheet/scss">
 .RankingFlow {
@@ -125,7 +124,6 @@ export default {
   fill: #fff;
 }
 
-
 .play_icon, .comment {
   position: relative;
   float: left;
@@ -140,4 +138,3 @@ export default {
   width: 2.048rem;
 }
 </style>
-
