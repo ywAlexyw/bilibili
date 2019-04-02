@@ -1,7 +1,6 @@
 <template>
     <div class="indexPage">
         <div class="indexP-content">
-          <Header></Header>
           <Nav></Nav>
           <div class="index-bivder"></div>
           <div class="index-banner">
@@ -14,7 +13,6 @@
             </div>
              <div class="point">
                <div class="swiper-pagination SC">
-
                </div>
              </div>
           </div>
@@ -26,7 +24,6 @@
 
 <script>
 import Swiper from 'swiper'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Nav from '@/components/Nav'
 import RankingFLow from '@/components/RankingFlow'
@@ -34,7 +31,6 @@ import { getSwiperImg } from '@/js/request.js'
 
 export default {
   components: {
-    Header,
     Footer,
     Nav,
     RankingFLow
@@ -51,7 +47,7 @@ export default {
     getData () {
       getSwiperImg().then((res) => {
         this.swiperImg = res.data.swiperImg
-        this.$nextTick(() => { 
+        this.$nextTick(() => {
           // $nextTick和mounted是一样的
           /* eslint-disable no-new */
           new Swiper('.index-banner', {
@@ -62,7 +58,7 @@ export default {
             effect: 'fade',
             loop: true,
             autoplay: {
-              delay: 3000,
+              delay: 3000
             }
           })
         })

@@ -33,7 +33,7 @@ import { setTimeout } from 'timers';
 export default {
   data () {
     return {
-      Nav: [],
+      navs: [],
       show: false,
     }
   },
@@ -43,7 +43,7 @@ export default {
   methods: {
     getData () {
       getNav().then((res) => {
-        this.Nav = res.data.getNav
+        this.Nav = res.data.navs
       })
     },
     navActive (el) {

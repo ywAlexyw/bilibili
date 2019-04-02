@@ -44,7 +44,7 @@ export default {
   methods: {
     getData () {
       getVideos().then((res) => {
-        this.videos = res.data.getVideos
+        this.videos = res.data.videos
       })
     }
   }
