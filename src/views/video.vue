@@ -162,20 +162,20 @@ export default {
         var IBheight = this.infoHeight[3].clientHeight
         var getHeight = this.infoHeight[0].clientHeight
         this.infoHeight[1].style.height = (getHeight / 20) * 1.024 + 'rem'
-        this.infoHeight[2].style.height = (IBheight / 20) * 1.024 +  'rem'
+        this.infoHeight[2].style.height = (IBheight / 20) * 1.024 + 'rem'
         // console.log(IBheight)
       } else {
         this.infoHeight[1].style.height = 1.024 + 'rem'
-        this.infoHeight[2].style.height =  2.38933 +  'rem'
+        this.infoHeight[2].style.height = 2.38933 + 'rem'
       }
     }
   },
   mounted () {
-    var title_height = document.getElementsByClassName('title-cont')[0]
+    var titleHeight = document.getElementsByClassName('title-cont')[0]
     var setTitle = document.getElementsByClassName('video-title')[0]
     var infoBlock = document.getElementsByClassName('infoBlock')[0]
     var IBheight = document.getElementsByClassName('infoBlock-cont')[0]
-    this.infoHeight.push(title_height, setTitle, infoBlock, IBheight)
+    this.infoHeight.push(titleHeight, setTitle, infoBlock, IBheight)
     // console.log(IBheight)
   }
 }
@@ -210,7 +210,6 @@ export default {
     padding: .21333rem 0 0;
   }
 }
-
 
 .player-box {
   position: absolute;
@@ -459,7 +458,6 @@ export default {
     }
 }
 
-
 .itemTime {
     position: absolute;
     width: 2.31867rem;
@@ -472,7 +470,6 @@ export default {
     line-height: .64rem;
     color: #fff;
 }
-
 
 .item_info .ii-item {
     position: relative;

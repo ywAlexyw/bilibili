@@ -17,6 +17,14 @@
              </div>
           </div>
           <RankingFLow></RankingFLow>
+          <div class="law">
+            <p>
+              哔哩哔哩 沪ICP备13002172号-3
+            </p>
+            <p>
+              信息网络传播视听节目许可证：0910417
+            </p>
+          </div>
           <Footer></Footer>
         </div>
     </div>
@@ -92,8 +100,6 @@ export default {
 
 .swiper-slide {
   position: relative;
-  // display: block;
-  // float: left;
   width: 100%;
   height: 4.69333rem;
   margin: auto;
@@ -134,5 +140,17 @@ export default {
 
 .swiper-pagination-bullet-active {
   background: #de698c!important;
+}
+
+.law {
+  position: relative;
+  margin-top: 1.344rem;
+  padding-bottom: .32rem;
+  p {
+    font-size: .55467rem;
+    color: #999;
+    line-height: 1.36533rem;
+    text-align: center;
+  }
 }
 </style>

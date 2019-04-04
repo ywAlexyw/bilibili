@@ -1,7 +1,7 @@
 <template>
     <div class="RankingFlow">
         <div class="RF-content">
-            <div class="video">
+            <div class="video clearFloat">
                 <a class="video-item" v-for="(item, index) in videos" :key="index">
                     <div class="video-item-img">
                         <!-- <img :src="item.image" :alt="item.name"> -->
@@ -137,4 +137,5 @@ export default {
   margin-left: .256rem;
   width: 2.048rem;
 }
+
 </style>

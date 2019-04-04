@@ -1,40 +1,39 @@
 <template>
-  <div class="index-nav">
-    <nav class="nav">
+  <nav class="nav">
+    <div class="index-nav">
       <div class="nav-content">
         <div class="n-c-wrapper">
-          <a class="wra-item" v-for="(item, index) in Nav" :key="index" >
-            <p :class="{ active: index === 0 }" @click="navActive($event)">{{item.name}}</p>
+          <a class="wra-item" v-for="(item, index) in navs" :key="index" >
+            <p class="item_1" :class="{ active: index === 0 }" @click="navActive(index)">{{item.name}}</p>
           </a>
         </div>
       </div>
       <div class="pullBtn" @click="show = true">
         <i class="pullBtn_icon"></i>
       </div>
-    </nav>
-    <div class="navBox" :class="{ showNavBox: show }">
-      <div class="navBox-content">
-        <a class="navBox-item" v-for="(item, index) in Nav" :key="index" :class="{ big: index > 11 && index < 14}">
-          <p :class="{ box_active: index === 0 }"  @click="navActive($event)">{{item.name}}</p>
-        </a>
+      <div class="navBox" :class="{ showNavBox: show }">
+        <div class="navBox-content">
+          <a class="navBox-item" v-for="(item, index) in navs" :key="index" :class="{ big: index > 11 && index < 14}">
+            <p class="item_2" :class="{ box_active: index === 0 }"  @click="navActive(index)">{{item.name}}</p>
+          </a>
+        </div>
+        <div class="pushBtn" @click="show = false">
+          <i class="pushBtn_icon"></i>
+        </div>
       </div>
-      <div class="pushBtn" @click="show = false">
-        <i class="pushBtn_icon"></i>
-      </div>
+      <slot name="navSub"></slot>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>
 import { getNav } from '@/js/request.js'
-import { watch } from 'fs';
-import { setTimeout } from 'timers';
 
 export default {
   data () {
     return {
       navs: [],
-      show: false,
+      show: false
     }
   },
   created () {
@@ -43,19 +42,18 @@ export default {
   methods: {
     getData () {
       getNav().then((res) => {
-        this.Nav = res.data.navs
+        this.navs = res.data.navs
       })
     },
-    navActive (el) {
-      if (this.show === true) {
-        var box_active = document.getElementsByClassName('box_active')[0]
-        box_active.classList.remove('box_active')
-        el.target.classList.add('box_active')
-      } else {
-        var active = document.getElementsByClassName('active')[0]
-        active.classList.remove('active')
-        el.target.classList.add('active')
-      }
+    navActive (index) {
+      var boxActive = document.getElementsByClassName('box_active')[0]
+      var active = document.getElementsByClassName('active')[0]
+      var item1 = document.getElementsByClassName('item_1')
+      var item2 = document.getElementsByClassName('item_2')
+      boxActive.classList.remove('box_active')
+      active.classList.remove('active')
+      item1[index].classList.add('active')
+      item2[index].classList.add('box_active')
     }
   }
 }
@@ -103,13 +101,11 @@ export default {
   }
 }
 
-.nav {
+.index-nav {
   position: fixed;
   width: 100%;
-  height: 1.87733rem;
   top: 1.856rem;
   background-color: #fff;
-  overflow: hidden;
   z-index: 5;
 }
 

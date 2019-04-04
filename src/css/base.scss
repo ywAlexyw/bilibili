@@ -131,3 +131,12 @@ html, body {
         transform: rotate(360deg);
     }
 }
+
+
+.clearFloat:before, .clearFloat:after{
+    content: '';
+    display: block;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+  }
