@@ -1,12 +1,12 @@
 <template>
     <header class="topBox">
-        <a  class="topB_left">
+        <router-link to="/"  class="topB_left">
             <i class="logo"></i>
-        </a>
+        </router-link >
         <div class="topB_right">
-            <a class="search_btn">
+            <router-link to="/search" class="search_btn">
                 <i class="search_btn-svg"></i>
-            </a>
+            </router-link>
             <a class="my_space">
                 <i class="my_space-svg"></i>
             </a>

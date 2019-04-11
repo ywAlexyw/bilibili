@@ -33,7 +33,7 @@
                         <div class="pushIcon" @click="allInfo = false" v-show="allInfo">
                             <i class="pushBtn_icon"></i>
                         </div>
-                        <div class="info">
+                        <div class="info-video">
                             <a class="writer">啊是大</a>
                             <span class="videoNum">2222次观看</span>
                             <span class="barrageNum">5555弹幕</span>
@@ -349,7 +349,7 @@ export default {
     transition: .2s;
 }
 
-.info {
+.info-video {
     position: relative;
     display: flex;
     flex-direction: row;

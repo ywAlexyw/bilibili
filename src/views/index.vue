@@ -17,29 +17,21 @@
              </div>
           </div>
           <RankingFLow></RankingFLow>
-          <div class="law">
-            <p>
-              哔哩哔哩 沪ICP备13002172号-3
-            </p>
-            <p>
-              信息网络传播视听节目许可证：0910417
-            </p>
-          </div>
-          <Footer></Footer>
+          <Container></Container>
         </div>
     </div>
 </template>
 
 <script>
 import Swiper from 'swiper'
-import Footer from '@/components/Footer'
+import Container from '@/components/Container'
 import Nav from '@/components/Nav'
 import RankingFLow from '@/components/RankingFlow'
 import { getSwiperImg } from '@/js/request.js'
 
 export default {
   components: {
-    Footer,
+    Container,
     Nav,
     RankingFLow
   },
@@ -88,6 +80,7 @@ export default {
   position: relative;
   height: 4.69333rem;
   padding: 0 .512rem;
+  z-index: 4;
 }
 
 .swiper-wrapper {
@@ -142,15 +135,4 @@ export default {
   background: #de698c!important;
 }
 
-.law {
-  position: relative;
-  margin-top: 1.344rem;
-  padding-bottom: .32rem;
-  p {
-    font-size: .55467rem;
-    color: #999;
-    line-height: 1.36533rem;
-    text-align: center;
-  }
-}
 </style>

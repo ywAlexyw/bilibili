@@ -1,88 +1,150 @@
 <template>
-  <nav class="nav">
-    <div class="index-nav">
-      <div class="nav-content">
-        <div class="n-c-wrapper">
-          <a class="wra-item" v-for="(item, index) in navs" :key="index" >
-            <p class="item_1" :class="{ active: index === 0 }" @click="navActive(index)">{{item.name}}</p>
-          </a>
+  <nav class="nav" :class="{ nav_index: navIndex }">
+    <div class="pagesContainer" :class="{ nav_index_pagesContainer: navIndex }">
+      <div class="nav-content" :class="{ nav_index_content: navIndex }">
+        <div class="n-c-wrapper" :class="{ nav_index_wrapper: navIndex }">
+          <router-link to="/channels" class="wra-item"
+           v-for="(item, index) in navs" :key="index" >
+            <p
+              class="item_1"
+              :class="{ active: index === onIndex }"
+              @click.prevent="navActive(index)"
+            >{{item.name}}</p>
+          </router-link>
         </div>
       </div>
-      <div class="pullBtn" @click="show = true">
+      <div class="pullBtn" @click="show = true" :class="{ pullBtn_index: navIndex }">
         <i class="pullBtn_icon"></i>
       </div>
       <div class="navBox" :class="{ showNavBox: show }">
         <div class="navBox-content">
-          <a class="navBox-item" v-for="(item, index) in navs" :key="index" :class="{ big: index > 11 && index < 14}">
-            <p class="item_2" :class="{ box_active: index === 0 }"  @click="navActive(index)">{{item.name}}</p>
+          <a
+            class="navBox-item"
+            v-for="(item, index) in navs"
+            :key="index"
+            :class="{ big: index > 11 && index < 14}"
+          >
+            <p
+              class="item_2"
+              :class="{ box_active: index === 0 }"
+              @click="navActive(index)"
+            >{{item.name}}</p>
           </a>
         </div>
         <div class="pushBtn" @click="show = false">
           <i class="pushBtn_icon"></i>
         </div>
       </div>
-      <slot name="navSub"></slot>
+      <slot name="scrollContainer"></slot>
     </div>
   </nav>
 </template>
 
 <script>
-import { getNav } from '@/js/request.js'
+import { getNav } from "@/js/request.js"
 
 export default {
-  data () {
+  data() {
     return {
       navs: [],
-      show: false
+      show: false,
+      navIndex: true
     }
   },
-  created () {
+  created() {
     this.getData()
   },
+  computed: {
+    onIndex () {
+      return this.$store.state.channels
+    }
+  },
   methods: {
-    getData () {
-      getNav().then((res) => {
+    getData() {
+      getNav().then(res => {
         this.navs = res.data.navs
       })
     },
-    navActive (index) {
-      var boxActive = document.getElementsByClassName('box_active')[0]
-      var active = document.getElementsByClassName('active')[0]
-      var item1 = document.getElementsByClassName('item_1')
-      var item2 = document.getElementsByClassName('item_2')
-      boxActive.classList.remove('box_active')
-      active.classList.remove('active')
-      item1[index].classList.add('active')
-      item2[index].classList.add('box_active')
+    navActive(index) {
+      var boxActive = document.getElementsByClassName("box_active")[0]
+      var active = document.getElementsByClassName("active")[0]
+      var item1 = document.getElementsByClassName("item_1")
+      var item2 = document.getElementsByClassName("item_2")
+      boxActive.classList.remove("box_active")
+      active.classList.remove("active")
+      item1[index].classList.add("active")
+      item2[index].classList.add("box_active")
+      this.$store.commit('setChannels', index)
+      if (index === 0) {
+        this.$router.push({
+         path: '/'
+        })
+      } else {
+        this.$router.push({
+         path: '/channels'
+        })
+      }
     }
-  }
+  },
+  watch: {
+    $route (to, from) {
+      if (to.path === '/channels') {
+        this.navIndex = false
+      } else {
+        this.navIndex = true
+        this.$store.commit('setChannels', 0)
+      }
+    }
+  },
+  // beforeRouteEnter (to, from, next) {
+  //   console.log(to)
+  //   console.log(from)
+  //   next()
+  // }
 }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
 .nav-content {
   position: relative;
-  width: 90%;
-  padding-top: .256rem;
+  width: 85%;
+  padding-top: 0.256rem;
   overflow: hidden;
   .n-c-wrapper {
     position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    top: .2rem;
     height: 1.87733rem;
-    padding-left: 1.024rem;
     white-space: nowrap;
-    align-items: center;
     .wra-item {
       display: inline-block;
       background-color: #fff;
-      margin-right: 1.49333rem;
+      padding: 0 .74667rem;
       p {
         width: 1.36533rem;
-        font-size: .59733rem;
+        font-size: 0.59733rem;
         line-height: 1.28rem;
         text-align: center;
         color: #757575;
-        border-bottom: .08533rem solid #fff;
+        border-bottom: 0.08533rem solid #fff;
       }
+    }
+  }
+}
+
+.nav_index_content {
+  width: 90%;
+  .nav_index_wrapper {
+    position: relative;
+    padding-left: 1.024rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 1.87733rem;
+    white-space: nowrap;
+    .wra-item {
+      margin-right: 1.49333rem;
+      padding: 0;
     }
   }
 }
@@ -90,33 +152,43 @@ export default {
 .pullBtn {
   position: absolute;
   top: 0;
-  right: .256rem;
+  right: .768rem;
   width: 1.38667rem;
   height: 1.87733rem;
   .pullBtn_icon {
     display: block;
-    width: .68267rem;
+    width: 0.68267rem;
     height: 1.87733rem;
     margin: 0 auto;
   }
 }
 
-.index-nav {
+.pullBtn_index {
+  right: .256rem;
+}
+
+.nav {
   position: fixed;
+  height: 3.75466rem; 
   width: 100%;
   top: 1.856rem;
   background-color: #fff;
   z-index: 5;
 }
 
+.nav_index {
+  height: 1.87733rem;
+  overflow: hidden;
+}
+
 .navBox {
   position: fixed;
   top: -6.5rem;
-  padding-left: .34133rem;
-  padding-right: .29867rem;
+  padding-left: 0.34133rem;
+  padding-right: 0.29867rem;
   overflow: hidden;
   background-color: #fff;
-  transition: .4s;
+  transition: 0.4s;
   z-index: 6;
   .navBox-content {
     position: relative;
@@ -126,18 +198,18 @@ export default {
     .navBox-item {
       position: relative;
       display: block;
-      padding-top: .256rem;
-      padding-bottom: .256rem;
-      margin-left: .59733rem;
-      margin-right: .59733rem;
+      padding-top: 0.256rem;
+      padding-bottom: 0.256rem;
+      margin-left: 0.59733rem;
+      margin-right: 0.59733rem;
       background-color: #fff;
       p {
         width: 1.36533rem;
-        font-size: .59733rem;
+        font-size: 0.59733rem;
         line-height: 1.28rem;
         text-align: center;
         color: #757575;
-        border-bottom: .08533rem solid #fff;
+        border-bottom: 0.08533rem solid #fff;
       }
     }
   }
@@ -146,25 +218,25 @@ export default {
 .pushBtn {
   position: relative;
   margin: auto;
-  margin-top: -.10667rem;
+  margin-top: -0.10667rem;
   width: 3.84rem;
-  height: .91733rem;
-  margin-bottom: .27733rem;
+  height: 0.91733rem;
+  margin-bottom: 0.27733rem;
 }
 
 .pushBtn_icon {
   position: absolute;
   display: block;
-  width: .68267rem;
-  height: .91733rem;
+  width: 0.68267rem;
+  height: 0.91733rem;
   margin: auto;
   left: 1.57867rem;
 }
 
 .big {
-  margin: 0 .29867rem!important;
+  margin: 0 0.29867rem !important;
   p {
-    width: 1.96267rem!important;
+    width: 1.96267rem !important;
   }
 }
 
@@ -172,8 +244,13 @@ export default {
   top: 1.87733rem;
 }
 
-.active, .box_active {
-  color: #fb7299!important;
-  border-bottom: .08533rem solid #fb7299!important;
+.active,
+.box_active {
+  color: #fb7299 !important;
+  border-bottom: 0.08533rem solid #fb7299 !important;
+}
+
+.pagesContainer {
+  height: 1.87733rem;
 }
 </style>

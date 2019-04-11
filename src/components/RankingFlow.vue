@@ -2,7 +2,7 @@
     <div class="RankingFlow">
         <div class="RF-content">
             <div class="video clearFloat">
-                <a class="video-item" v-for="(item, index) in videos" :key="index">
+                <router-link to="video" class="video-item" v-for="(item, index) in videos" :key="index">
                     <div class="video-item-img">
                         <!-- <img :src="item.image" :alt="item.name"> -->
                         <div class="info">
@@ -23,7 +23,7 @@
                     <div class="video-item-title">
                         <p>{{item.name}}</p>
                     </div>
-                </a>
+                </router-link>
             </div>
         </div>
     </div>

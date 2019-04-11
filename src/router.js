@@ -4,16 +4,16 @@ import Router from 'vue-router'
 const index = () => import('@/views/index')
 const video = () => import('@/views/video')
 const search = () => import('@/views/search')
-const donghua = () => import('@/views/donghua')
+const channels = () => import('@/views/channels')
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
+  // base: process.env.BASE_URL,
   routes: [
     {
-      path: '/a',
+      path: '/',
       name: 'index',
       component: index
     },
@@ -28,14 +28,9 @@ export default new Router({
       component: search
     },
     {
-      path: '/',
-      name: 'donghua',
-      component: donghua
-      // children: [
-      //   {
-      //     path: '', component:
-      //   }
-      // ]
+      path: '/channels',
+      name: 'channels',
+      component: channels
     }
   ]
 })
