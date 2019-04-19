@@ -8,11 +8,11 @@
                 <i class="search_btn-svg"></i>
             </router-link>
             <a class="my_space">
-                <i class="my_space-svg"></i>
+                <img class="my_space-svg" src="../assets/noface.gif">
             </a>
-            <a class="downloadAppBtn">
+            <router-link to="/other" class="downloadAppBtn">
                 <p>下载 App</p>
-            </a>
+            </router-link>
         </div>
     </header>
 </template>
@@ -43,6 +43,8 @@
 .topB_right {
   position: absolute;
   right: 0;
+  display: flex;
+  align-items: center;
 }
 
 .search_btn {

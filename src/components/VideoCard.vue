@@ -1,6 +1,7 @@
 <template>
     <router-link to="/video" class="video-item">
       <div class="video-item-img">
+        <slot name="videoCardImg"></slot>
         <div class="info">
           <div class="play_icon">
             <i class="playIcon"></i>

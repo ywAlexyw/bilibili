@@ -2,21 +2,21 @@ $iconSrc: '../assets/svg/';
 .logo, .my_space-svg, .search_btn-svg, .pullBtn_icon, .icon_download,
  .icon_share, .icon_favorite, .pushBtn_icon, .banIcon, .rankIcon, .icon_arrow 
  {
-    display: inline-block;
+    display: block;
     background-repeat: no-repeat;
     vertical-align: middle;
 }
 
 .logo {
     width: 100%;
-    height: 23.89px;
-    background: url($iconSrc + 'logo.svg')
+    height: 1.1945rem;
+    background: url($iconSrc + 'logo.svg') center no-repeat;
 }
 
 .my_space-svg {
     width: 100%;
     height: 100%;
-    background: url($iconSrc + 'mySpace.svg');
+    // background: url('../assets/noface.gif');
     border-radius: 50%;
 }
 
@@ -88,4 +88,23 @@ $iconSrc: '../assets/svg/';
     height: 100%;
     background: url($iconSrc + 'push.svg') center no-repeat;
     transform: rotateZ(90deg)
+}
+
+.TV-Play {
+    background: url(../assets/TV-Play.png)
+}
+
+.TV-Puase {
+    background: url(../assets/TV-Pause.png)
+}
+
+.icon-widescreen {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-position: 100%;
+    background-color: rgba(0,0,0,0);
+    background-repeat: no-repeat;
+    background-image: url(../assets/widescreen.png);
 }

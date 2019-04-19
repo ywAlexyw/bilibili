@@ -1,5 +1,6 @@
 <template>
     <div class="search">
+        <Header></Header>
         <div class="search-top clearFloat">
             <div class="searchBox">
                 <i class="searchIcon"></i>
@@ -42,6 +43,18 @@
         </div>
     </div>
 </template>
+
+<script>
+import Header from '@/components/Header'
+
+export default {
+  components: {
+    Header
+  }
+}
+</script>
+
+
 
 <style lang="scss" rel="stylesheet/scss">
 .search-top {

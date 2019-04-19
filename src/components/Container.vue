@@ -1,7 +1,7 @@
 <template>
-  <footer class="footer">
+  <footer class="footer" v-show="show">
     <div class="f-background"></div>
-    <img class="f-closeBtn" src="http://s1.hdslb.com/bfs/static/mult/images/ic_close_bottom.png">
+    <img class="f-closeBtn" @click="closeBtn" src="http://s1.hdslb.com/bfs/static/mult/images/ic_close_bottom.png">
     <img class="f-logo" src="http://s1.hdslb.com/bfs/static/mult/images/logo_bottom.png">
     <div class="f-content">
       <div class="f-c-title">上bilibili客户端</div>
@@ -12,6 +12,22 @@
     </a>
   </footer>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      show: true
+    }
+  },
+  methods: {
+    closeBtn () {
+      this.show = false
+    }
+  }
+}
+</script>
+
 
 <style lang="scss" rel="stylesheet/scss">
 .footer {
@@ -60,12 +76,12 @@
 }
 
 .f-content .f-c-title {
-  line-height: 16px;
+  line-height: 0.8rem;
   font-size: .59733rem;
   color: #fff;
 }
 .f-content .f-c-message {
-  line-height: 16px;
+  line-height: 0.8rem;
   font-size: .512rem;
   color: #999;
 }

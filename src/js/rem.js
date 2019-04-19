@@ -12,5 +12,16 @@ function setRem () {
 setRem()
 // 改变窗口大小时重新设置 rem
 window.onresize = function () {
+  // console.log(document.body.offsetWidth)
+  // if (document.body.offsetWidth < 540) {
+  // console.log(document.body.offsetWidth)
   setRem()
+  // }
+  // if (document.body.offsetWidth <= 768 && document.body.offsetWidth > 540) {
+  //   let html = document.getElementsByTagName('html')
+  //   html.style.fontSize = 48 + 'px'
+  // } if (document.body.offsetWidth <= 1024 && document.body.offsetWidth > 768) {
+  //   let html = document.getElementsByTagName('html')
+  //   html.style.fontSize = 64 + 'px'
+  // }
 }

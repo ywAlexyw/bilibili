@@ -1,5 +1,6 @@
 <template>
     <div class="indexPage">
+        <Header></Header>
         <div class="indexP-content">
           <Nav></Nav>
           <div class="index-bivder"></div>
@@ -24,6 +25,7 @@
 
 <script>
 import Swiper from 'swiper'
+import Header from '@/components/Header'
 import Container from '@/components/Container'
 import Nav from '@/components/Nav'
 import RankingFLow from '@/components/RankingFlow'
@@ -31,6 +33,7 @@ import { getSwiperImg } from '@/js/request.js'
 
 export default {
   components: {
+    Header,
     Container,
     Nav,
     RankingFLow

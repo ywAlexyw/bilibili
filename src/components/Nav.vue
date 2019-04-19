@@ -2,15 +2,22 @@
   <nav class="nav" :class="{ nav_index: navIndex }">
     <div class="pagesContainer" :class="{ nav_index_pagesContainer: navIndex }">
       <div class="nav-content" :class="{ nav_index_content: navIndex }">
-        <div class="n-c-wrapper" :class="{ nav_index_wrapper: navIndex }">
-          <router-link to="/channels" class="wra-item"
-           v-for="(item, index) in navs" :key="index" >
-            <p
-              class="item_1"
-              :class="{ active: index === onIndex }"
-              @click.prevent="navActive(index)"
-            >{{item.name}}</p>
-          </router-link>
+        <div class="roller-hidden">
+          <div class="n-c-wrapper" :class="{ nav_index_wrapper: navIndex }">
+            <router-link to="/" class="wra-item" >
+              <p class="item_1" @click="navActive(0)" :class="{ active: onIndex === 0 }">首页</p>
+            </router-link>
+            <template  v-for="(item, index) in navs">
+              <router-link :to="'/channels/' + (item.id)" class="wra-item"
+                :key="index" v-if="index !== 0">
+                <p
+                  class="item_1"
+                  :class="{ active: index === onIndex }"
+                  @click="navActive(index)"
+                >{{item.name}}</p>
+              </router-link>
+            </template>
+          </div>
         </div>
       </div>
       <div class="pullBtn" @click="show = true" :class="{ pullBtn_index: navIndex }">
@@ -18,7 +25,7 @@
       </div>
       <div class="navBox" :class="{ showNavBox: show }">
         <div class="navBox-content">
-          <a
+          <router-link :to="'/channels/' + (item.id)"
             class="navBox-item"
             v-for="(item, index) in navs"
             :key="index"
@@ -29,7 +36,7 @@
               :class="{ box_active: index === 0 }"
               @click="navActive(index)"
             >{{item.name}}</p>
-          </a>
+          </router-link>
         </div>
         <div class="pushBtn" @click="show = false">
           <i class="pushBtn_icon"></i>
@@ -44,6 +51,9 @@
 import { getNav } from "@/js/request.js"
 
 export default {
+  props: {
+    onActive: String
+  },
   data() {
     return {
       navs: [],
@@ -75,32 +85,29 @@ export default {
       item1[index].classList.add("active")
       item2[index].classList.add("box_active")
       this.$store.commit('setChannels', index)
-      if (index === 0) {
-        this.$router.push({
-         path: '/'
-        })
-      } else {
-        this.$router.push({
-         path: '/channels'
-        })
-      }
+      this.show = false
     }
   },
   watch: {
     $route (to, from) {
-      if (to.path === '/channels') {
+      if (to.path.split('/')[1] === 'channels') {
         this.navIndex = false
-      } else {
+      } if (to.path === '/') {
         this.navIndex = true
         this.$store.commit('setChannels', 0)
       }
+    },
+    navs (val) {
+      if (this.$route.path.split('/')[1] === 'channels') {
+        val.forEach((value, index) => {
+          if (value.id === this.onActive) {
+            this.$store.commit('setChannels', index)
+            this.navIndex = false
+          }
+        })
+      }
     }
   },
-  // beforeRouteEnter (to, from, next) {
-  //   console.log(to)
-  //   console.log(from)
-  //   next()
-  // }
 }
 </script>
 
@@ -108,14 +115,15 @@ export default {
 .nav-content {
   position: relative;
   width: 85%;
+  height: 1.87733rem;
   padding-top: 0.256rem;
   overflow: hidden;
   .n-c-wrapper {
     position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
-    top: .2rem;
-    height: 1.87733rem;
+    top: .4rem;
+    height: 2.1rem;
     white-space: nowrap;
     .wra-item {
       display: inline-block;
@@ -140,7 +148,7 @@ export default {
     padding-left: 1.024rem;
     overflow-x: scroll;
     overflow-y: hidden;
-    height: 1.87733rem;
+    height: 2.1rem;
     white-space: nowrap;
     .wra-item {
       margin-right: 1.49333rem;
@@ -178,7 +186,7 @@ export default {
 
 .nav_index {
   height: 1.87733rem;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .navBox {
@@ -225,12 +233,11 @@ export default {
 }
 
 .pushBtn_icon {
-  position: absolute;
+  position: relative;
   display: block;
   width: 0.68267rem;
   height: 0.91733rem;
   margin: auto;
-  left: 1.57867rem;
 }
 
 .big {
@@ -253,4 +260,20 @@ export default {
 .pagesContainer {
   height: 1.87733rem;
 }
+
+.roller-hidden {
+  height: 2rem;
+  overflow: hidden;
+  position: relative;
+  top: -0.3rem;
+}
+
+// .n-c-wrapper::-webkit-scrollbar {
+//   width: 0 !important
+// }
+
+// .n-c-wrapper { -ms-overflow-style: none; }
+
+
+// .n-c-wrapper { overflow: -moz-scrollbars-none; }
 </style>

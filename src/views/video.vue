@@ -1,17 +1,35 @@
 <template>
     <div class="page">
+        <Header></Header>
         <div class="page-video">
             <div class="player">
                 <div class="player-box">
                     <div class="display">
                         <div class="load-layer">
+                            <Video @byVideo="process"></Video>
                             <img class="videoImg">
-                            <i class="playerIcon"></i>
+                            <i class="TV-Play" :class="{move: getVideoInfo}" @click="videoPlay" v-if="!play"></i>
+                            <i class="TV-Puase" :class="{move: getVideoInfo}" @click="videoPlay" v-else></i>
                             <div class="innerTop">
                                 <p>av47441335</p>
                             </div>
-                            <div class="videoTime">
+                            <div class="videoTime" v-if="allTime === ''">
                                 <p>00:00</p>
+                                
+                            </div>
+                        </div>
+                        <div class="player-contorl" v-if="allTime !== ''">
+                            <div class="time-container">
+                                <span class="time">{{currentTime}}/{{allTime}}</span>
+                            </div>
+                            <div class="contorl-right">
+                                <span class="btn-widescreen">
+                                    <i class="icon-widescreen" @click="clickFullScreen"></i>
+                                </span>
+                            </div>
+                            <div class="contorl-slider" ref="contorlSlider" @click="changProcess($event)">
+                                <div class="line" ref="line"></div>
+                                <div class="lineBtn" ref="lineBtn"></div>
                             </div>
                         </div>
                     </div>
@@ -136,14 +154,33 @@
 </template>
 
 <script>
+import Header from '@/components/Header'
+import Video from '@/components/Video'
 import { getVideos } from '@/js/request.js'
 
 export default {
+  components: {
+    Header,
+    Video
+  },
   data () {
     return {
       videos: [],
       allInfo: false,
-      infoHeight: []
+      infoHeight: [],
+      getVideoInfo: false,
+      newTime: ''
+    }
+  },
+  computed: {
+    play () {
+      return this.$store.state.play
+    },
+    currentTime () {
+      return this.$store.state.currentTime
+    },
+    allTime () {
+      return this.$store.state.allTime
     }
   },
   created () {
@@ -154,6 +191,29 @@ export default {
       getVideos().then((res) => {
         this.videos = res.data.videos
       })
+    },
+    videoPlay () {
+      this.$store.commit('videoPlay')
+      if (this.getVideoInfo === false) {
+        this.getVideoInfo = true
+      }
+    },
+    clickFullScreen () {
+      this.$store.commit('setFullScreen')
+    },
+    process (val) {
+      let processWidth = ((val.time_1 / val.time_0) * 100).toFixed(6)
+      this.move(processWidth)
+    },
+    changProcess (el) {
+      let a = document.getElementsByClassName('contorl-slider')[0]
+      let processWidth = el.clientX - this.$refs.contorlSlider.offsetLeft
+      let place = (processWidth / el.srcElement.clientWidth) * 100
+      this.move(place)
+      this.newTime = place
+    },
+    move (val) {
+      this.$refs.line.style.width = val + '%'
     }
   },
   watch: {
@@ -163,7 +223,6 @@ export default {
         var getHeight = this.infoHeight[0].clientHeight
         this.infoHeight[1].style.height = (getHeight / 20) * 1.024 + 'rem'
         this.infoHeight[2].style.height = (IBheight / 20) * 1.024 + 'rem'
-        // console.log(IBheight)
       } else {
         this.infoHeight[1].style.height = 1.024 + 'rem'
         this.infoHeight[2].style.height = 2.38933 + 'rem'
@@ -176,7 +235,6 @@ export default {
     var infoBlock = document.getElementsByClassName('infoBlock')[0]
     var IBheight = document.getElementsByClassName('infoBlock-cont')[0]
     this.infoHeight.push(titleHeight, setTitle, infoBlock, IBheight)
-    // console.log(IBheight)
   }
 }
 </script>
@@ -254,7 +312,7 @@ export default {
   -webkit-filter: blur(.34133rem);
 }
 
-.playerIcon {
+.TV-Play, .TV-Puase {
   position: absolute;
   display: block;
   bottom: .6912rem;
@@ -262,7 +320,10 @@ export default {
   width: 1.96267rem;
   height: 1.96267rem;
   background-size: 100% auto;
-  background-color: #fff;
+}
+
+.move {
+  bottom: 2.38933333rem;
 }
 
 .innerTop {
@@ -402,7 +463,7 @@ export default {
 .oz-videoTag {
     position: relative;
     padding: .46933rem .768rem;
-    border-bottom: 1px solid #e7e7e7;
+    border-bottom: .04267rem solid #e7e7e7;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -424,6 +485,7 @@ export default {
 }
 
 .comments img {
+    display: block;
     width: .93867rem;
     margin-right: .10667rem;
 }
@@ -445,7 +507,7 @@ export default {
         height: 3.2rem;
         overflow: hidden;
         border-radius: .256rem;
-        border: 1px solid;
+        border: .04267rem solid;
     }
     .item_info {
         position: relative;
@@ -464,7 +526,7 @@ export default {
     bottom: .17067rem;
     right: .17067rem;
     background: rgba(0,0,0,.3);
-    border-radius: 4px;
+    border-radius: .08533rem;
     text-align: center;
     font-size: .46933rem;
     line-height: .64rem;
@@ -514,8 +576,8 @@ export default {
     margin-top: .21333rem;
     padding: .08533rem .17067rem;
     display: inline-block;
-    border: 1px solid #fb7299;
-    border-radius: 4px;
+    border: .04267rem solid #fb7299;
+    border-radius: .08533rem;
     color: #fb7299;
     font-size: .42667rem;
 }
@@ -592,5 +654,100 @@ export default {
             transform: scale(0.8);
         }
     }
+}
+
+.play_icon, .comment {
+  position: relative;
+  float: left;
+  width: .68267rem;
+  margin-top: -.064rem;
+}
+
+.player-contorl {
+    position: absolute;
+    // display: flex;
+    // align-items: center;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.87733333rem;
+    border: 0 solid #e2e2e2;
+    background-color: rgba(0,0,0,.5);
+    font-size: 0;
+    text-align: left;
+    opacity: 1;
+    z-index: 5;
+}
+
+.time-container {
+    position: absolute;
+    top: 0;
+    left: .512rem;
+    height: 1.87733333rem;
+}
+
+.contorl-right {
+    height: 100%;
+    float: right;
+    font-size: 0;
+    margin-right: .512rem;
+    cursor: default;
+}
+
+.btn-widescreen {
+    display: block;
+    height: 1.024rem;
+    width: 1.024rem;
+    text-align: center;
+    vertical-align: top;
+    background-color: rgba(0,0,0,0);
+    color: #585858;
+    margin-top: .512rem;
+    margin-left: 1.024rem;
+}
+
+.time {
+    font-size: .59733333rem;
+    font-family: arial,sans-serif;
+    color: #fff;
+    height: 100%;
+    line-height: 1.87733333rem;
+    vertical-align: top;
+    float: left;
+}
+
+.line:after {
+    content: "";
+    position: absolute;
+    display: block;
+    right: -.23466667rem;
+    top: -.23466667rem;
+    width: .512rem;
+    height: .512rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: .02133333rem .02133333rem .128rem #000!important;
+}
+
+.line {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    transform: translateZ(0);
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #de698c;
+}
+
+.contorl-slider {
+    position: absolute;
+    bottom: .896rem;
+    left: 4.56533333rem;
+    right: 4.90666667rem;
+    width: auto;
+    height: .08533333rem;
+    background-color: #fff;
 }
 </style>

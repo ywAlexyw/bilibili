@@ -1,20 +1,19 @@
 <template>
     <div class="indexPage">
+        <Header></Header>
         <div class="indexP-content">
-            <Nav>
-                <div slot="scrollContainer">
-                    <div class="navSub">
-                        <div class="n-s-wrapper">
-                            <div class="scrollContainer">
-                                <template v-for="(item, index) in channels">
-                                    <a class="navSub-wra-item" :key="index" v-if="index === 0">
-                                        <p class="item_2" :class="{ subActive: index === 0 }" @click="getSubActive($event, index)">推荐</p>
-                                    </a>
-                                    <a class="navSub-wra-item" :key="index" v-else>
-                                        <p class="item_2" @click="getSubActive($event, index)">{{item.title}}</p>
-                                    </a>
-                                </template>
-                            </div>
+            <Nav :onActive="onActive">
+                <div slot="scrollContainer" class="navSub">
+                    <div class="n-s-wrapper">
+                        <div class="scrollContainer">
+                            <template v-for="(item, index) in subTitle">
+                                <a class="navSub-wra-item" :key="index" v-if="index === 0">
+                                    <p class="navSub_item_2" :class="{ subActive: index === 0 }" @click="getSubActive(index)">推荐</p>
+                                </a>
+                                <router-link :to="'/channels/' + (item.id)" class="navSub-wra-item" :key="index" v-else>
+                                    <p class="navSub_item_2" @click="getSubActive(index)">{{item.title}}</p>
+                                </router-link>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -22,9 +21,12 @@
             <div class="index-line"></div>
             <VideoLayout>
                 <div slot="videoLayout" class="clearFloat">
-                    <Card v-for="(item, index) in channels" :key="index">
-                        <p slot="title" class="VL-title" :class="{ firstTitle: index === 0 }">{{item.title}}</p>
-                        <a slot="rank"  class="rank clearFloat" v-if="index === 0">
+                    <Card :onSubCont="onSubCont" v-for="(item, index) in channels" :key="index">
+                        <!-- <p slot="title" class="VL-title" :class="{ firstTitle: index === 0 }" v-if="onSubCont">{{item.title}}</p> -->
+                        <p slot="title" class="VL-title" :class="{ firstTitle: index === 0 }" v-if="onSubCont">{{item.title}}</p>
+                        <p slot="newTitle" class="VL-title" :class="{ new: !onSubCont }"  v-if="!onSubCont && index=== 1">最新视频</p>
+                        <p slot="newTitle" class="VL-title" :class="{ hot: !onSubCont }" v-if="!onSubCont && index=== 0">热门推荐</p>
+                        <router-link to="/rank" slot="rank"  class="rank clearFloat" v-if="index === 0" v-show="onSubCont">
                             <i class="rankIcon"></i>
                             <div class="rank-words" >
                                 <p>排行榜</p>
@@ -32,8 +34,8 @@
                             <div class="rank-arrow">
                                 <i class="icon_arrow"></i>
                             </div>
-                        </a>
-                        <a slot="moreItem"  class="moreItem clearFloat" v-else>
+                        </router-link>
+                        <a slot="moreItem"  class="moreItem clearFloat" v-else v-show="onSubCont" @click="getSubActive(index)">
                             <div class="moreItem-words" >
                                 <p>查看更多</p>
                             </div>
@@ -43,6 +45,7 @@
                         </a>
                         <div slot="videos" class="clearFloat">
                             <VideoCard v-for="(sub, index) in item.childs" :key="index">
+                                <img slot="videoCardImg" :src="sub.image">
                                 <p slot="playNum">{{sub.plays}}</p>
                                 <p slot="commentNum">{{sub.mesNum}}</p>
                                 <p slot="itemName">{{sub.name}}</p>
@@ -57,24 +60,32 @@
 </template>
 
 <script>
+import Header from '@/components/Header'
 import Nav from '@/components/Nav'
 import Card from '@/components/Card'
 import VideoLayout from '@/components/VideoLayout'
 import VideoCard from '@/components/VideoCard'
 import Container from '@/components/Container'
-import { getChannels } from '@/js/request.js'
+import { getChannels, getSubContent, getSubTitle } from '@/js/request.js'
+import { setTimeout, setInterval, clearInterval } from 'timers';
 
 export default {
   components: {
-      VideoLayout,
-      VideoCard,
-      Card,
-      Nav,
-      Container
+    Header,
+    VideoLayout,
+    VideoCard,
+    Card,
+    Nav,
+    Container
   },
   data () {
     return {
       channels: [],
+      chaNum: 0,
+      onSubCont: true,
+      onSubNum: 0,
+      subTitle: [],
+      onActive: ''
     }
   },
   created () {
@@ -84,42 +95,53 @@ export default {
     getData () {
       getChannels().then((res) => {
         this.channels = res.data.channel_1
+      }),
+      getSubTitle().then((res) => {
+        this.subTitle = res.data.subTitle[0].Title
       })
     },
-    getSubActive (el, index) {
+    getSubActive (index) {
+      var boxTitle = document.getElementsByClassName('navSub_item_2')
       var subActive = document.getElementsByClassName('subActive')[0]
-      subActive.classList.remove('subActive')
-      el.target.classList.add('subActive')
-    },
-    changeChannels (index) {
+      if (typeof subActive !== 'undefined') {
+        subActive.classList.remove('subActive')
+        boxTitle[index].classList.add('subActive')
+      }
+      this.onSubCont = false
+      this.onSubNum = index
       getChannels().then((res) => {
-        switch (index) {
-          case 1:
-            this.channels = res.data.channel_1
-            break
-          case 2:
-            this.channels = res.data.channel_2
-            break
-          case 3:
-            this.channels = res.data.channel_3
-            break
-          case 4:
-            this.channels = res.data.channel_4
-            break
-          default:
-            return
-        }
+        this.channels = res.data.channel_1
       })
+      if (index === 0 ) {
+        this.onSubCont = true
+      }
     }
   },
   watch: {
     '$store.state.channels' (val) {
-      this.changeChannels(val)
-    //   this.onIndex = val
+      if (val === 0) {
+        this.$router.push({
+          path: '/'
+        })
+      } else {
+        this.chaNum = val
+        this.getSubActive(0)
+        this.onSubCont = true
+      }
     },
-    $route (to, from) {
-      
+    chaNum (val) {
+      getSubTitle().then((res) => {
+        this.subTitle = res.data.subTitle[val-1].Title
+      })
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    var pathArr = to.path.split('/')
+    next(vm => {
+      if (pathArr[1] === 'channels') {
+        vm.onActive= pathArr[2]
+      }
+    })
   }
 }
 </script>
@@ -134,11 +156,11 @@ export default {
     border-bottom: .02133rem solid #ccc;
 }
 
-.Nav-line {
-    position: relative;
-    width: 100%;
-    padding-top: 37.52px;
-}
+// .Nav-line {
+//     position: relative;
+//     width: 100%;
+//     padding-top: 37.52px;
+// }
 
 .navSub-wra-item {
     display: inline-block;
@@ -199,6 +221,10 @@ export default {
     color: #212121;
 }
 
+.VL_title_2 {
+  line-height: 1.10933rem;
+}
+
 
 .firstTitle{
     line-height: 2.26133rem;
@@ -247,6 +273,7 @@ export default {
   height: 1.87733rem;
   margin-top: -.3rem;
   overflow: hidden;
+  background-color: #fff;
   z-index: 1;
   .n-s-wrapper {
     position: relative;
@@ -260,6 +287,14 @@ export default {
       padding-bottom: 0.29rem;
     }
   }
+}
+
+.hot {
+  line-height: 2.26133rem;
+}
+
+.new {
+  line-height: 1.10933rem;
 }
 
 </style>
