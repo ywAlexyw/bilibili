@@ -6,7 +6,7 @@ function setRem () {
   // 得到html的Dom元素
   let htmlDom = document.getElementsByTagName('html')[0]
   // 设置根元素字体大小
-  htmlDom.style.fontSize = htmlWidth / 16 + 'px'
+  htmlDom.style.fontSize = htmlWidth / 20 + 'px'
 }
 // 初始化
 setRem()
@@ -15,13 +15,17 @@ window.onresize = function () {
   // console.log(document.body.offsetWidth)
   // if (document.body.offsetWidth < 540) {
   // console.log(document.body.offsetWidth)
+  // }
+  // console.log(0)
+  // if (document.body.offsetWidth >= 320 && document.body.offsetWidth < 640) {
+  //   setRem()
+  // } else if (document.body.offsetWidth > 640) {
+  //   console.log(1)
+  //   let html = document.getElementsByTagName('html')[0]
+  //   html.style.fontSize = 40 + 'px'
+  // } else if (document.body.offsetWidth < 320) {
+  //   let html = document.getElementsByTagName('html')[0]
+  //   html.style.fontSize = 20 + 'px'
+  // }
   setRem()
-  // }
-  // if (document.body.offsetWidth <= 768 && document.body.offsetWidth > 540) {
-  //   let html = document.getElementsByTagName('html')
-  //   html.style.fontSize = 48 + 'px'
-  // } if (document.body.offsetWidth <= 1024 && document.body.offsetWidth > 768) {
-  //   let html = document.getElementsByTagName('html')
-  //   html.style.fontSize = 64 + 'px'
-  // }
 }

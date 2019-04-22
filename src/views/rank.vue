@@ -23,7 +23,7 @@
         <div class="rank-content">
             <div class="rankVideo">
                 <div class="itemWrap">
-                    <a class="itemVideo" v-for="(item, index) in videos" :key="index">
+                    <a class="rank-itemVideo" v-for="(item, index) in videos" :key="index">
                         <div class="item_index" v-if="index === 0">
                             <img src="../assets/rank1.png">
                         </div>
@@ -204,12 +204,11 @@ export default {
 }
 
 
-.itemVideo {
+.rank-itemVideo {
     position: relative;
     display: flex;
     flex-direction: row;
     width: 100%;
-    padding-right: .512rem;
     padding-top: .42667rem;
     padding-bottom: .42667rem;
     opacity: 1;

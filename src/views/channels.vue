@@ -22,7 +22,6 @@
             <VideoLayout>
                 <div slot="videoLayout" class="clearFloat">
                     <Card :onSubCont="onSubCont" v-for="(item, index) in channels" :key="index">
-                        <!-- <p slot="title" class="VL-title" :class="{ firstTitle: index === 0 }" v-if="onSubCont">{{item.title}}</p> -->
                         <p slot="title" class="VL-title" :class="{ firstTitle: index === 0 }" v-if="onSubCont">{{item.title}}</p>
                         <p slot="newTitle" class="VL-title" :class="{ new: !onSubCont }"  v-if="!onSubCont && index=== 1">最新视频</p>
                         <p slot="newTitle" class="VL-title" :class="{ hot: !onSubCont }" v-if="!onSubCont && index=== 0">热门推荐</p>

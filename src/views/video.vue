@@ -501,6 +501,7 @@ export default {
     padding-bottom: .42667rem;
     opacity: 1;
     border-bottom: .02133rem solid #e7e7e7;
+    background-color: #f4f4f4;
     .item_img {
         position: relative;
         width: 4.992rem;

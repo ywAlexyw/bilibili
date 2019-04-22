@@ -1,16 +1,15 @@
 <template>
     <div class="search">
-        <Header></Header>
         <div class="search-top clearFloat">
             <div class="searchBox">
-                <i class="searchIcon"></i>
-                <input type="search" id="search" placeholder="搜索视频、番剧、UP主或AV号">
+                <i class="searchIcon" @click="search"></i>
+                <input type="search" id="search" placeholder="搜索视频、番剧、UP主或AV号" v-model="wd">
             </div>
             <div class="cancelBtn">
                 <p>取消</p>
             </div>
         </div>
-        <div class="search-recommed">
+        <div class="search-recommed" v-if="show">
             <p class="subTitle">大家都在搜索</p>
             <div class="recommed-list">
                 <div class="rl-item">
@@ -36,20 +35,48 @@
                 </div>
             </div>
         </div>
-        <div class="search-history">
+        <div class="search-history" v-if="show">
             <div class="history-title">
                 <p>历史搜索</p>
+            </div>
+        </div>
+        <div class="search-result">
+            <div class="nothing">
+                <img src="//s1.hdslb.com/bfs/static/mult/images/notFound.png">
+                <p>什么都没有找到啊 T_T</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Header from '@/components/Header'
-
 export default {
-  components: {
-    Header
+  data () {
+    return {
+      wd: '',
+      show: false
+    }
+  },
+  methods: {
+    search () {
+      this.$router.push({
+        path: '/search',
+        query: {
+          wd: this.wd
+        }
+      })
+    }
+  },
+  watch: {
+    $route (to, from) {
+      console.log(to)
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    if (to.query.wd !== 'undefined') {
+      
+    }
+    next()
   }
 }
 </script>
@@ -61,7 +88,6 @@ export default {
     position: fixed;
     width: 93.33%;
     top: 0;
-    left: 0;
     height: 1.87733rem;
     padding: 0 3.33%;
     background-color: #fff;
@@ -164,5 +190,34 @@ export default {
     border-radius: .17067rem;
     background-color: #f4f4f4;
     color: #505050;
+}
+
+input::-ms-clear {
+ display:none!important;
+}
+
+.search-result {
+    position: relative;
+    z-index: 1;
+    margin-top: 3.776rem;
+    width: 100%;
+    overflow: hidden;
+    .nothing {
+        position: relative;
+        width: 100%;
+        margin: auto;
+        padding-top: 4.26667rem;
+        img {
+            display: block;
+            width: 10.24rem;
+            margin: auto;
+        }
+        p {
+            text-align: center;
+            color: #757575;
+            font-size: .55467rem;
+            line-height: 1.92rem;
+        }
+    }
 }
 </style>

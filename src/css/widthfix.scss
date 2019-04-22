@@ -1,0 +1,12 @@
+@media screen and (min-width: 640px) {
+    html {
+        font-size: 40px!important;
+    }
+    body {
+        max-width: 320px;
+        margin: 0 auto;
+    }
+    .topBox, .nav, .footer, .search-top, .navBox, .fixTop {
+        width: 320px!important;
+    }
+}

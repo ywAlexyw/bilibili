@@ -5,6 +5,7 @@ import store from './store/store'
 import 'swiper/dist/css/swiper.min.css'
 import './css/base.scss'
 import './css/icons.scss'
+import './css/widthfix.scss'
 import './js/rem'
 
 Vue.config.productionTip = false
