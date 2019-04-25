@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import actions from './actions'
+import user from './user'
 
 Vue.use(Vuex)
 
@@ -9,7 +11,9 @@ const store = new Vuex.Store({
     play: false,
     currentTime: '',
     allTime: '',
-    fullScreen: false
+    fullScreen: false,
+    searchBG: false,
+    showContainer: true
   },
   mutations: {
     setChannels (state, payload) {
@@ -26,7 +30,17 @@ const store = new Vuex.Store({
     },
     setFullScreen (state) {
       state.fullScreen = !state.fullScreen
+    },
+    nothingBG (state, payload) {
+      state.searchBG = payload
+    },
+    setShowContainer (state, payload) {
+      state.showContainer = payload
     }
+  },
+  actions,
+  modules: {
+    user
   }
 })
 

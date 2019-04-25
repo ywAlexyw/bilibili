@@ -3,15 +3,15 @@
         <div class="search-top clearFloat">
             <div class="searchBox">
                 <i class="searchIcon" @click="search"></i>
-                <input type="search" id="search" placeholder="搜索视频、番剧、UP主或AV号" v-model="wd">
+                <input type="search" id="search" placeholder="搜索视频、番剧、UP主或AV号" v-model="wd" @keyup.enter="search">
             </div>
-            <div class="cancelBtn">
+            <router-link to="/" class="cancelBtn">
                 <p>取消</p>
-            </div>
+            </router-link>
         </div>
-        <div class="search-recommed" v-if="show">
+        <div class="search-recommed" v-if="!isShow">
             <p class="subTitle">大家都在搜索</p>
-            <div class="recommed-list">
+            <div class="recommed-list" @click="tagSearch($event)" ref="tagList">
                 <div class="rl-item">
                     <p>东宫</p>
                 </div>
@@ -35,12 +35,18 @@
                 </div>
             </div>
         </div>
-        <div class="search-history" v-if="show">
-            <div class="history-title">
+        <div class="search-history clearFloat" v-if="!isShow">
+            <div class="history-title clearFloat">
                 <p>历史搜索</p>
             </div>
+            <div class="historyItem clearFloat"  v-for="(item, index) in history" :key="index">
+                <div class="historyIcon">
+                    <img src="//s1.hdslb.com/bfs/static/mult/images/history.png">
+                </div>
+                <p>{{item}}</p>
+            </div>
         </div>
-        <div class="search-result">
+        <div class="search-result"  v-if="isShow">
             <div class="nothing">
                 <img src="//s1.hdslb.com/bfs/static/mult/images/notFound.png">
                 <p>什么都没有找到啊 T_T</p>
@@ -54,7 +60,13 @@ export default {
   data () {
     return {
       wd: '',
-      show: false
+      history: [],
+      list: ['东宫', '药水哥', '光年之外', '华农兄弟', '复仇者联盟4', '英雄联盟', '只狼']
+    }
+  },
+  computed: {
+    isShow () {
+      return this.$store.state.searchBG
     }
   },
   methods: {
@@ -65,23 +77,39 @@ export default {
           wd: this.wd
         }
       })
-    }
-  },
-  watch: {
-    $route (to, from) {
-      console.log(to)
+      this.$store.commit('nothingBG', true)
+    },
+    tagSearch (el) {
+      this.wd = el.target.innerText
+      this.$router.push({
+        path: '/search',
+        query: {
+          wd: this.wd
+        }
+      })
+      this.history.push(this.wd)
     }
   },
   beforeRouteEnter (to, from, next) {
-    if (to.query.wd !== 'undefined') {
-      
+    if (to.path === '/search') {
+      next(vm => { vm.$store.commit('nothingBG', false) })
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (from.path === '/search') {
+      this.$store.commit('nothingBG', false)
+      this.wd = ''
     }
     next()
+  },
+  mounted () {
+    var searchBox = document.getElementsByClassName('search-top')[0]
+    if (document.documentElement.clientWidth > 640) {
+      searchBox.style.width = 460.874 + 'px'
+    }
   }
 }
 </script>
-
-
 
 <style lang="scss" rel="stylesheet/scss">
 .search-top {
@@ -91,11 +119,10 @@ export default {
     height: 1.87733rem;
     padding: 0 3.33%;
     background-color: #fff;
-    z-index: 1;
+    z-index: 111;
     flex-direction: row;
     .searchBox {
         position: relative;
-        width: 88.29%;
         height: 1.28rem;
         margin-top: .29867rem;
         float: left;
@@ -157,16 +184,35 @@ export default {
     position: relative;
     margin-top: 1.10933rem;
     border-top: .42667rem solid #f4f4f4;
-    .history-title {
+    .history-title, .historyItem {
         position: relative;
         margin-left: .53333rem;
-        p {
-            text-align: left;
-            color: #999;
+        p{
+            position: relative;
+            float: left;
+            width: 11.94667rem;
+            overflow: hidden;
+            margin-left: .384rem;
             font-size: .59733rem;
-            line-height: 1.96267rem;
+            line-height: 1.87733rem;
+            color: #505050;
+            text-align: left;
+        }
+        p:first-child {
+            border: 0;
         }
     }
+}
+
+.historyItem{
+    border-bottom: .02133rem solid #ccc;
+}
+
+.historyIcon {
+    position: relative;
+    float: left;
+    width: .68267rem;
+    margin-top: .35rem;
 }
 
 .searchIcon {
@@ -199,7 +245,7 @@ input::-ms-clear {
 .search-result {
     position: relative;
     z-index: 1;
-    margin-top: 3.776rem;
+    padding-top: 3.776rem;
     width: 100%;
     overflow: hidden;
     .nothing {
@@ -210,6 +256,7 @@ input::-ms-clear {
         img {
             display: block;
             width: 10.24rem;
+            height: 9rem;
             margin: auto;
         }
         p {
@@ -219,5 +266,24 @@ input::-ms-clear {
             line-height: 1.92rem;
         }
     }
+}
+
+.history-title p:first-child {
+    text-align: left;
+    color: #999;
+    font-size: .59733rem;
+    line-height: 1.96267rem;
+}
+
+.history-title p {
+    position: relative;
+    float: left;
+    width: 11.94667rem;
+    overflow: hidden;
+    margin-left: .384rem;
+    font-size: .59733rem;
+    line-height: 1.87733rem;
+    color: #505050;
+    text-align: left;
 }
 </style>

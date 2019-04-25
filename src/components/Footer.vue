@@ -5,11 +5,11 @@
   </div>
 </template>
 
-<<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" rel="stylesheet/scss">
 .law {
   position: relative;
-  margin-top: 1.344rem;
-  padding-bottom: .32rem;
+  padding: 1.024rem 0 1.70667rem;
+  background-color: #f4f4f4;
   p {
     font-size: .55467rem;
     color: #999;

@@ -7,3 +7,5 @@ export const getSwiperImg = (parmes) => axios.get(baseUrl + 'getSwiperImg', parm
 export const getChannels = (parmes) => axios.get(baseUrl + 'getChannels', parmes)
 export const getSubContent = (parmes) => axios.get(baseUrl + 'getSubContent', parmes)
 export const getSubTitle = (params) => axios.get(baseUrl + 'getSubTitle', params)
+
+export const login = (payload) => axios.post(baseUrl + 'getUserInfo', payload)

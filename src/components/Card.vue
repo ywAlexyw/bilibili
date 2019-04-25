@@ -40,17 +40,12 @@ export default {
 }
 </script>
 
-
 <style lang="scss" rel="stylesheet/scss">
 .item-title {
   position: relative;
   margin-left: .512rem;
   margin-bottom: .21333rem;
 }
-
-// .IT_title_2 {
-//   margin-bottom: .40533rem;
-// }
 
 .recommend {
   position: relative;

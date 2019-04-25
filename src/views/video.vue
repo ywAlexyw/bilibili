@@ -15,7 +15,6 @@
                             </div>
                             <div class="videoTime" v-if="allTime === ''">
                                 <p>00:00</p>
-                                
                             </div>
                         </div>
                         <div class="player-contorl" v-if="allTime !== ''">
@@ -131,9 +130,9 @@
             </div>
             <div class="relativeVideo">
                 <div class="itemWrap">
-                    <a class="itemVideo" v-for="(item, index) in videos" :key="index">
+                    <a class="itemVideo" v-for="(item, index) in videos" :key="index" @click="again">
                         <div class="item_img">
-                            <img >
+                            <img :src="item.image">
                             <div class="itemTime">00:00:00</div>
                         </div>
                         <div class="item_info">
@@ -206,7 +205,6 @@ export default {
       this.move(processWidth)
     },
     changProcess (el) {
-      let a = document.getElementsByClassName('contorl-slider')[0]
       let processWidth = el.clientX - this.$refs.contorlSlider.offsetLeft
       let place = (processWidth / el.srcElement.clientWidth) * 100
       this.move(place)
@@ -214,6 +212,9 @@ export default {
     },
     move (val) {
       this.$refs.line.style.width = val + '%'
+    },
+    again () {
+      this.$router.go(0) // 实现页面刷新
     }
   },
   watch: {

@@ -48,20 +48,20 @@
 </template>
 
 <script>
-import { getNav } from "@/js/request.js"
+import { getNav } from '@/js/request.js'
 
 export default {
   props: {
     onActive: String
   },
-  data() {
+  data () {
     return {
       navs: [],
       show: false,
       navIndex: true
     }
   },
-  created() {
+  created () {
     this.getData()
   },
   computed: {
@@ -70,20 +70,20 @@ export default {
     }
   },
   methods: {
-    getData() {
+    getData () {
       getNav().then(res => {
         this.navs = res.data.navs
       })
     },
-    navActive(index) {
-      var boxActive = document.getElementsByClassName("box_active")[0]
-      var active = document.getElementsByClassName("active")[0]
-      var item1 = document.getElementsByClassName("item_1")
-      var item2 = document.getElementsByClassName("item_2")
-      boxActive.classList.remove("box_active")
-      active.classList.remove("active")
-      item1[index].classList.add("active")
-      item2[index].classList.add("box_active")
+    navActive (index) {
+      var boxActive = document.getElementsByClassName('box_active')[0]
+      var active = document.getElementsByClassName('active')[0]
+      var item1 = document.getElementsByClassName('item_1')
+      var item2 = document.getElementsByClassName('item_2')
+      boxActive.classList.remove('box_active')
+      active.classList.remove('active')
+      item1[index].classList.add('active')
+      item2[index].classList.add('box_active')
       this.$store.commit('setChannels', index)
       this.show = false
     }
@@ -107,7 +107,7 @@ export default {
         })
       }
     }
-  },
+  }
 }
 </script>
 
@@ -177,7 +177,7 @@ export default {
 
 .nav {
   position: fixed;
-  height: 3.75466rem; 
+  height: 3.75466rem;
   width: 100%;
   top: 1.856rem;
   background-color: #fff;
@@ -186,7 +186,6 @@ export default {
 
 .nav_index {
   height: 1.87733rem;
-  // overflow: hidden;
 }
 
 .navBox {
@@ -267,13 +266,4 @@ export default {
   position: relative;
   top: -0.3rem;
 }
-
-// .n-c-wrapper::-webkit-scrollbar {
-//   width: 0 !important
-// }
-
-// .n-c-wrapper { -ms-overflow-style: none; }
-
-
-// .n-c-wrapper { overflow: -moz-scrollbars-none; }
 </style>

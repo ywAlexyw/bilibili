@@ -59,28 +59,6 @@
   }
 }
 
-
-// .info-video {
-//   position: absolute;
-//   width: 100%;
-//   height: .68267rem;
-//   left: 0;
-//   bottom: 0;
-//   padding-left: .34133rem;
-//   // background: linear-gradient(180deg,rgba(33,33,33,0),rgba(33,33,33,.5));
-//   z-index: 3;
-//   .play_num p, .comment_num p {
-//     text-align: left;
-//     font-size: .46933rem;
-//     color: #fff;
-//     line-height: .59733rem;
-//   }
-//   .comment {
-//     margin-left: .61867rem;
-//   }
-// }
-
-
 .playIcon, .commentIcon {
   display: block;
   width: 100%;

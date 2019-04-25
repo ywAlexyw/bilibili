@@ -55,13 +55,16 @@ export default {
           /* eslint-disable no-new */
           new Swiper('.index-banner', {
             pagination: {
-              el: '.swiper-pagination'
+              el: '.swiper-pagination',
+              clickable: true
             },
-            speed: 400,
+            speed: 1000,
             effect: 'fade',
             loop: true,
             autoplay: {
-              delay: 3000
+              delay: 3000,
+              disableOnInteraction: false
+              // 用户操作swiper之后，是否禁止autoplay。默认为true：停止。如果设置为false，用户操作swiper之后自动切换不会停止，每次都会重新启动autoplay
             }
           })
         })

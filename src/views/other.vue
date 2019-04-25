@@ -13,14 +13,12 @@
 <script>
 export default {
   mounted () {
-    let size = document.getElementsByTagName('html')[0].style.fontSize
-    let pageHeight = window.screen.availHeight / size.split('px')[0]
-    document.getElementsByClassName('pageMin')[0].style.height = pageHeight + 'rem'
+    let pageHeight = window.screen.availHeight
+    document.getElementsByClassName('pageMin')[0].style.height = pageHeight + 'px'
     document.documentElement.style.overflow = 'hidden'
   }
 }
 </script>
-
 
 <style scope>
 .other {
@@ -79,4 +77,3 @@ export default {
     margin-top: -2.13333rem;
 }
 </style>
-

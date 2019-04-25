@@ -7,7 +7,7 @@
             <router-link to="/search" class="search_btn">
                 <i class="search_btn-svg"></i>
             </router-link>
-            <a class="my_space">
+            <a class="my_space" @click="login">
                 <img class="my_space-svg" src="../assets/noface.gif">
             </a>
             <router-link to="/other" class="downloadAppBtn">
@@ -16,6 +16,38 @@
         </div>
     </header>
 </template>
+
+<script>
+import Cookies from 'js-cookie'
+
+export default {
+  created () {
+    let userInfo = Cookies.getJSON('userInfo')
+    if (typeof userInfo !== 'undefined') {
+      // this.$store.dispatch('login', userInfo)
+      this.$store.commit('logined', true)
+    }
+  },
+  computed: {
+    logined () {
+      return this.$store.state.user.login
+    }
+  },
+  methods: {
+    login () {
+      if (this.logined === true) {
+        this.$router.push({
+          path: '/user'
+        })
+      } else {
+        this.$router.push({
+          path: '/login'
+        })
+      }
+    }
+  }
+}
+</script>
 
 <style lang="scss" rel="stylesheet/scss">
 .topBox {

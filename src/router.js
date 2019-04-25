@@ -7,6 +7,8 @@ const search = () => import('@/views/search')
 const channels = () => import('@/views/channels')
 const rank = () => import('@/views/rank.vue')
 const other = () => import('@/views/other.vue')
+const login = () => import('@/views/login.vue')
+const user = () => import('@/views/user.vue')
 
 Vue.use(Router)
 
@@ -43,10 +45,16 @@ export default new Router({
       path: '/other',
       name: 'other',
       component: other
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
+    },
+    {
+      path: '/user',
+      name: 'user',
+      component: user
     }
   ]
 })
-
-// router.beforeEach((to, from, next) => {
-//   // ...
-// })

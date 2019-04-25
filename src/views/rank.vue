@@ -23,7 +23,7 @@
         <div class="rank-content">
             <div class="rankVideo">
                 <div class="itemWrap">
-                    <a class="rank-itemVideo" v-for="(item, index) in videos" :key="index">
+                    <router-link to="/video" class="rank-itemVideo" v-for="(item, index) in videos" :key="index">
                         <div class="item_index" v-if="index === 0">
                             <img src="../assets/rank1.png">
                         </div>
@@ -37,7 +37,7 @@
                             <p>{{item.id}}</p>
                         </div>
                         <div class="item_img">
-                            <img >
+                            <img :src="item.image">
                             <div class="itemTime">00:00:00</div>
                         </div>
                         <div class="item_info">
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -67,13 +67,9 @@
 </template>
 
 <script>
-import Nav from '@/components/Nav'
 import { getNav, getVideos } from '@/js/request'
 
 export default {
-  components: {
-    Nav
-  },
   data () {
     return {
       navs: [],
@@ -82,7 +78,7 @@ export default {
     }
   },
   created () {
-    this.getData()  
+    this.getData()
   },
   methods: {
     getData () {
@@ -180,7 +176,6 @@ export default {
         line-height: 1.024rem;
         color: #fb7299;
         text-align: center;
-        
     }
 }
 
@@ -202,7 +197,6 @@ export default {
     position: relative;
     padding: .5rem 0 0;
 }
-
 
 .rank-itemVideo {
     position: relative;
@@ -316,7 +310,6 @@ export default {
         transform: translate(-50%,-50%);
     }
 }
-
 
 .play_icon, .comment {
   position: relative;

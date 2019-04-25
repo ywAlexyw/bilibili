@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
     <div class="pageMin" ref="pageMin">
       <keep-alive>
         <router-view></router-view>
@@ -22,10 +22,9 @@ export default {
       show: true
     }
   },
-  mounted() {
-    let size = document.getElementsByTagName('html')[0].style.fontSize
-    let pageHeight = window.screen.availHeight / size.split('px')[0]
-    this.$refs.pageMin.style.minHeight = pageHeight + 'rem'
+  mounted () {
+    let pageHeight = window.screen.availHeight
+    this.$refs.pageMin.style.minHeight = pageHeight + 'px'
   },
   watch: {
     $route (to, from) {
@@ -33,6 +32,13 @@ export default {
         this.show = false
       } else {
         this.show = true
+      }
+    },
+    '$store.state.searchBG' (val) {
+      if (val === true) {
+        this.$refs.app.style.backgroundColor = 'rgb(244, 244, 244)'
+      } else {
+        this.$refs.app.style.backgroundColor = '#ffffff'
       }
     }
   }

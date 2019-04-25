@@ -65,8 +65,7 @@ import Card from '@/components/Card'
 import VideoLayout from '@/components/VideoLayout'
 import VideoCard from '@/components/VideoCard'
 import Container from '@/components/Container'
-import { getChannels, getSubContent, getSubTitle } from '@/js/request.js'
-import { setTimeout, setInterval, clearInterval } from 'timers';
+import { getChannels, getSubTitle } from '@/js/request.js'
 
 export default {
   components: {
@@ -94,7 +93,7 @@ export default {
     getData () {
       getChannels().then((res) => {
         this.channels = res.data.channel_1
-      }),
+      })
       getSubTitle().then((res) => {
         this.subTitle = res.data.subTitle[0].Title
       })
@@ -111,7 +110,7 @@ export default {
       getChannels().then((res) => {
         this.channels = res.data.channel_1
       })
-      if (index === 0 ) {
+      if (index === 0) {
         this.onSubCont = true
       }
     }
@@ -130,7 +129,7 @@ export default {
     },
     chaNum (val) {
       getSubTitle().then((res) => {
-        this.subTitle = res.data.subTitle[val-1].Title
+        this.subTitle = res.data.subTitle[val - 1].Title
       })
     }
   },
@@ -138,7 +137,7 @@ export default {
     var pathArr = to.path.split('/')
     next(vm => {
       if (pathArr[1] === 'channels') {
-        vm.onActive= pathArr[2]
+        vm.onActive = pathArr[2]
       }
     })
   }
@@ -146,7 +145,6 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-
 .index-line {
     position: relative;
     width: 100%;
@@ -154,12 +152,6 @@ export default {
     height: .02133rem;
     border-bottom: .02133rem solid #ccc;
 }
-
-// .Nav-line {
-//     position: relative;
-//     width: 100%;
-//     padding-top: 37.52px;
-// }
 
 .navSub-wra-item {
     display: inline-block;
@@ -224,7 +216,6 @@ export default {
   line-height: 1.10933rem;
 }
 
-
 .firstTitle{
     line-height: 2.26133rem;
 }
@@ -263,7 +254,7 @@ export default {
 }
 
 .subActive {
-    color: #fb7299!important; 
+    color: #fb7299!important;
 }
 
 .navSub {

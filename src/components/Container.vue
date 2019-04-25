@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer" v-show="show">
+  <footer class="footer" v-show="showContainer">
     <div class="f-background"></div>
     <img class="f-closeBtn" @click="closeBtn" src="http://s1.hdslb.com/bfs/static/mult/images/ic_close_bottom.png">
     <img class="f-logo" src="http://s1.hdslb.com/bfs/static/mult/images/logo_bottom.png">
@@ -15,19 +15,18 @@
 
 <script>
 export default {
-  data () {
-    return {
-      show: true
+  computed: {
+    showContainer () {
+      return this.$store.state.showContainer
     }
   },
   methods: {
     closeBtn () {
-      this.show = false
+      this.$store.commit('setShowContainer', false)
     }
   }
 }
 </script>
-
 
 <style lang="scss" rel="stylesheet/scss">
 .footer {
