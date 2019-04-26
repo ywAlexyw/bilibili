@@ -1,29 +1,17 @@
-# recruit
+## 项目运行
+``` bash
+# 克隆到本地
+git clone https://github.com/ywAlexyw/ximalaya
 
-## Project setup
-```
+# 进入文件夹
+打开cmd命令
+
+# 安装依赖
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# 项目运行
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+# 发布环境
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
