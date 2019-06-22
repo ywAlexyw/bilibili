@@ -47,6 +47,6 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss">
 .pageMin {
-  position: relative;
+  position: absolute;
 }
 </style>
