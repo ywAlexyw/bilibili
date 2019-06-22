@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="comments">
                                     <img src="//s1.hdslb.com/bfs/static/mult/images/ico_danmu.png">
-                                    <p>{{item.mesNum}}</p>
+                                    <p>{{item.asdasd}}</p>
                                 </div>
                             </div>
                         </div>
