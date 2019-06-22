@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       show: true,
-      arr:[]
+      arr:[2]
     }
   },
   mounted () {
