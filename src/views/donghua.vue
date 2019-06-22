@@ -69,7 +69,7 @@ export default {
   },
   data () {
     return {
-      channel_1: [1]
+      channel_1: []
     }
   },
   created () {
