@@ -19,7 +19,8 @@ export default {
   },
   data () {
     return {
-      show: true
+      show: true,
+      arr:[]
     }
   },
   mounted () {
