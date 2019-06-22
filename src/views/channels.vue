@@ -7,7 +7,7 @@
                     <div class="n-s-wrapper">
                         <div class="scrollContainer">
                             <template v-for="(item, index) in subTitle">
-                                <a class="navSub-wra-item" :key="index"  v-if="item===0">
+                                <a class="navSub-wra-item" :key="index" v-if="index === 0">
                                     <p class="navSub_item_2" :class="{ subActive: index === 0 }" @click="getSubActive(index)">推荐</p>
                                 </a>
                                 <router-link :to="'/channels/' + (item.id)" class="navSub-wra-item" :key="index" v-else>
