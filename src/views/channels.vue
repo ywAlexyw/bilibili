@@ -83,7 +83,8 @@ export default {
       onSubCont: true,
       onSubNum: 0,
       subTitle: [],
-      onActive: ''
+      onActive: '',
+      test:''
     }
   },
   created () {
